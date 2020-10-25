@@ -201,6 +201,8 @@ namespace Bau.Libraries.LibCsvFiles
 		private string Normalize(string value, char separator)
 		{
 			// Quita los saltos de línea
+			// TODO: esto no debería hacerse, cuando un campo tiene salto de línea se debe conservar pero añadiendo comillas al principio y final
+			// TODO: del valor del mismo modo que si se encuentra un separador
 			if (!string.IsNullOrWhiteSpace(value))
 			{
 				value = value.Replace("\r\n", " ");

@@ -19,9 +19,10 @@ namespace Bau.Libraries.LibCsvFiles.Controllers
 		/// <summary>
 		///		Carga una página de un archivo en un dataTable
 		/// </summary>
-		public DataTable Load(string fileName, int page, int recordsPerPage, bool countRecords, out int totalRecords)
+		public DataTable Load(string fileName, int page, int recordsPerPage, bool countRecords, out long totalRecords)
 		{
-			int record = 0, offset = (page - 1) * recordsPerPage;
+			long record = 0;
+			int offset = (page - 1) * recordsPerPage;
 			DataTable table = new DataTable();
 			bool end = false;
 
