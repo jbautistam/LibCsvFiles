@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 
-using Bau.Libraries.LibHelper.Extensors;
+using Bau.Libraries.LibCsvFiles.Extensors;
 using Bau.Libraries.LibCsvFiles.Models;
 
 namespace Bau.Libraries.LibCsvFiles
@@ -258,7 +258,7 @@ namespace Bau.Libraries.LibCsvFiles
 								value = field.GetDateTime(FileDefinition.DateFormat);
 							break;
 						case ColumnModel.ColumnType.Boolean:
-								value = field.EqualsIgnoreCase(FileDefinition.TrueValue);
+								value = field.Equals(FileDefinition.TrueValue, StringComparison.CurrentCultureIgnoreCase);
 							break;
 						case ColumnModel.ColumnType.Numeric:
 								value = field.Replace(FileDefinition.DecimalSeparator, ".").GetDouble(0);

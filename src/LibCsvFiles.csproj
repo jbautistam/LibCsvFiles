@@ -14,8 +14,4 @@
     <None Remove="ve-2694.tmp" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\Common\LibHelper\src\LibHelper.csproj" />
-  </ItemGroup>
-
 </Project>
