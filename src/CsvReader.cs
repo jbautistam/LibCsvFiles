@@ -123,21 +123,48 @@ namespace Bau.Libraries.LibCsvFiles
 		private string ReadLine()
 		{
 			string line = string.Empty;
+			bool mustReadNextLine = false;
 
 				// Abre el archivo si estaba cerrado
 				if (FileReader == null)
 					Open();
 				// Lee la siguiente línea no vacía y se salta las líneas de cabecera
-				while (!FileReader.EndOfStream && string.IsNullOrWhiteSpace(line))
+				while (!FileReader.EndOfStream && (string.IsNullOrWhiteSpace(line) || mustReadNextLine))
 				{
+					// Resetea el valor que indica que la siguiente vez se debe leer la siguiente línea
+					mustReadNextLine = false;
 					// Lee la línea
-					line = FileReader.ReadLine();
-					// Quita los espacios
-					if (!string.IsNullOrWhiteSpace(line))
-						line = line.Trim();
+					line += FileReader.ReadLine();
+					// Se debe leer la siguiente línea si el número de caracteres de comillas no es par, eso quiere decir que ha habido un salto
+					// de línea en un campo
+					if (CountQuotes(line) % 2 != 0)
+					{
+						// Añade a la línea el salto de línea que ha borrado FileReader.ReadLine()
+						line += Environment.NewLine;
+						// Indica que se debe leer una línea más
+						mustReadNextLine = true;
+					}
 				}
+				// Quita los espacios de la línea
+				if (!string.IsNullOrWhiteSpace(line))
+					line = line.Trim();
 				// Devuelve la línea leida
 				return line;
+		}
+
+		/// <summary>
+		///		Cuenta el número de comillas que hay en una línea
+		/// </summary>
+		private int CountQuotes(string line)
+		{
+			int number = 0;
+
+				// Cuenta las comillas de la cadena
+				foreach (char chr in line)
+					if (chr == '"')
+						number++;
+				// Devuelve el número contado
+				return number;
 		}
 
 		///// <summary>
