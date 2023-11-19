@@ -380,7 +380,7 @@ public class CsvReader : IDataReader
 	/// <summary>
 	///		Obtiene una serie de bytes
 	/// </summary>
-	public long GetBytes(int i, long fieldOffset, byte[] buffer, int bufferoffset, int length)
+	public long GetBytes(int i, long fieldOffset, byte[]? buffer, int bufferoffset, int length)
 	{
 		throw new NotImplementedException();
 	}
@@ -393,7 +393,7 @@ public class CsvReader : IDataReader
 	/// <summary>
 	///		Obtiene una serie de caracteres
 	/// </summary>
-	public long GetChars(int i, long fieldoffset, char[] buffer, int bufferoffset, int length)
+	public long GetChars(int i, long fieldoffset, char[]? buffer, int bufferoffset, int length)
 	{
 		throw new NotImplementedException();
 	}
@@ -565,7 +565,7 @@ public class CsvReader : IDataReader
 	/// <summary>
 	///		Indizador por número de campo
 	/// </summary>
-	public object? this[int i] 
+	public object this[int i] 
 	{ 
 		get 
 		{ 
@@ -579,7 +579,7 @@ public class CsvReader : IDataReader
 	/// <summary>
 	///		Indizador por nombre de campo
 	/// </summary>
-	public object? this[string name]
+	public object this[string name]
 	{ 
 		get 
 		{
