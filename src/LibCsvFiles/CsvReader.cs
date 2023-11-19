@@ -19,6 +19,7 @@ public class CsvReader : IDataReader
 	private long _row;
 	private System.Text.StringBuilder _actualLine = new();
 
+
 	public CsvReader(FileModel? definition, List<ColumnModel>? columns, int notifyAfter = 10_000)
 	{
 		FileDefinition = definition ?? new FileModel();
