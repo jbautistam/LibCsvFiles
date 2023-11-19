@@ -1,0 +1,37 @@
+{
+	"Columns": [
+		{
+			"Name": "SaleId",
+			"Type": "int"
+		},
+		{
+			"Name": "StoreId",
+			"Type": "int"
+		},
+		{
+			"Name": "ProductId",
+			"Type": "int"
+		},
+		{
+			"Name": "Date",
+			"Type": "date"
+		},
+		{
+			"Name": "Units",
+			"Type": "int"
+		},
+		{
+			"Name": "Price",
+			"Type": "decimal"
+		}
+	],
+	"Definition": {
+		"DateFormat": "yyyy-MM-dd",
+		"DecimalSeparator": ".",
+		"ThousandsSeparator": ";",
+		"TrueValue": "1",
+		"FalseValue": "0",
+		"Separator": ",",
+		"WithHeader": true
+	}
+}

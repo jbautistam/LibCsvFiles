@@ -1,0 +1,25 @@
+{
+	"Columns": [
+		{
+			"Name": "StoreId",
+			"Type": "string"
+		},
+		{
+			"Name": "ProductId",
+			"Type": "string"
+		},
+		{
+			"Name": "Price",
+			"Type": "decimal"
+		}
+	],
+	"Definition": {
+		"DateFormat": "yyyy-MM-dd",
+		"DecimalSeparator": ".",
+		"ThousandsSeparator": ";",
+		"TrueValue": "1",
+		"FalseValue": "0",
+		"Separator": ",",
+		"WithHeader": true
+	}
+}

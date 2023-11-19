@@ -1,0 +1,34 @@
+name: Publish package
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: '7.0.x'
+          source-url: https://api.nuget.org/v3/index.json
+        env:
+          NUGET_AUTH_TOKEN: ${{secrets.NUGET_TOKEN}}
+
+      - name: Install dependencies
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --configuration Release src/LibCsvFiles/LibCsvFiles.csproj
+
+      - name: Create the package
+        run: dotnet pack --configuration Release src/LibCsvFiles/LibCsvFiles.csproj -p:PackageVersion=1.1.$GITHUB_RUN_NUMBER
+
+      - name: Publish the package to Nuget
+        run: dotnet nuget push src/LibCsvFiles/bin/Release/*.nupkg --no-symbols --api-key ${{secrets.NUGET_TOKEN}}
