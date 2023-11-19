@@ -1,8 +1,8 @@
 ﻿using Bau.Libraries.LibCsvFiles;
 using Bau.Libraries.LibCsvFiles.Models;
-using LibCsvTestsHelper.Models;
+using LibCsvFilesTest.Models;
 
-namespace LibCsvTestsHelper.Tools;
+namespace LibCsvFilesTest.Tools;
 
 /// <summary>
 ///		Clase de ayuda para tratamiento de archivos

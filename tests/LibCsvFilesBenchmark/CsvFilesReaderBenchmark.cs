@@ -3,7 +3,6 @@ using BenchmarkDotNet.Jobs;
 using BenchmarkDotNet.Order;
 
 using Bau.Libraries.LibCsvFiles;
-using LibCsvTestsHelper.Tools;
 
 namespace LibCsvFilesBenchmark;
 
@@ -34,12 +33,12 @@ public class CsvFilesReaderBenchmark
 	[Benchmark(Baseline = true, Description = "Csv not optimized")]
 	public void CsvReadNotOptimized()
 	{
-		using (CsvReaderNotOptimized reader = FileHelper.GetCsvReaderNotOptimized(FileHelper.GetFullFileName(FileName)))
+		using (CsvReaderNotOptimized reader = new(null, null))
 		{
 			object? value;
 
 				// Abre el archivo
-				reader.Open(FileHelper.GetFullFileName(FileName));
+				reader.Open(GetFullFileName(FileName));
 				// Recorre todos los registros
 				while (reader.Read())
 					for (int index = 0; index < reader.FieldCount; index++)
@@ -58,11 +57,16 @@ public class CsvFilesReaderBenchmark
 			object? value;
 
 				// Abre el archivo
-				reader.Open(FileHelper.GetFullFileName(FileName));
+				reader.Open(GetFullFileName(FileName));
 				// Recorre todos los registros
 				while (reader.Read())
 					for (int index = 0; index < reader.FieldCount; index++)
 						value = reader.GetValue(index);
 		}
 	}
+
+	/// <summary>
+	///		Obtiene el nombre completo del archivo
+	/// </summary>
+	private string GetFullFileName(string fileName) => Path.Combine("D:\\Projects\\Personal\\BauDbStudio\\Samples\\Data\\Benchmarks", fileName);
 }

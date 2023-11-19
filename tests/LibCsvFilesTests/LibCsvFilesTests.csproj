@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\LibCsvTestsHelper\LibCsvTestsHelper.csproj" />
+    <ProjectReference Include="..\..\src\LibCsvFiles\LibCsvFiles.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -52,7 +52,7 @@ public class CsvReader : IDataReader
 
 	/// <summary>
 	///		Interpreta la cabecera del archivo si es necesario
-	///		Sólo se interpreta la cabecera cuando no se han definido columnas y la definición indica que tiene cabeceras
+	///		Sólo se interpreta la cabecera cuando la definición indica que tiene cabeceras
 	/// </summary>
 	private void ReadHeader()
 	{
@@ -63,12 +63,12 @@ public class CsvReader : IDataReader
 				// Interpreta las columnas (si no se han definido)
 				if (Columns.Count == 0 && line.Length > 0)
 				{
-					int start = 0, length;
+					int start = 0;
 
 						// Mientras quede algo para leer
 						while (start < line.Length)
 						{
-							(start, length) = NextField(line, start);
+							int length = GetLengthField(line, start);
 
 								// Añade el nombre de la columna
 								Columns.Add(new ColumnModel
@@ -100,7 +100,7 @@ public class CsvReader : IDataReader
 			if (_actualLine.Length > 0)
 			{
 				// Interpreta la línea
-				ConvertFields(_actualLine.ToString(), _recordsValues);
+				ConvertFields(_actualLine.ToString());
 				// Incrementa el número de línea y lanza el evento
 				_row++;
 				RaiseEventReadBlock(_row);
@@ -116,22 +116,22 @@ public class CsvReader : IDataReader
 	/// <summary>
 	///		Convierte las cadenas leidas
 	/// </summary>
-	private void ConvertFields(ReadOnlySpan<char> line, object?[] values)
+	private void ConvertFields(ReadOnlySpan<char> line)
 	{
 		int start = 0, length;
 
 			// Convierte los campos
-			for (int column = 0; column < values.Length; column++)
+			for (int column = 0; column < _recordsValues.Length; column++)
 			{
 				// Vacía el valor
-				values[column] = null;
+				_recordsValues[column] = null;
 				// Obtiene el siguiente campo
-				(start, length) = NextField(line, start);
+				length = GetLengthField(line, start);
 				// Si hay algo...
 				if (length > 0)
 				{
 					// Obtiene el valor (normaliza la línea para quitar las comillas de inicio a fin)
-					values[column] = ConvertField(Columns[column], Normalize(line.Slice(start, length)));
+					_recordsValues[column] = ConvertField(Columns[column], Normalize(line.Slice(start, length)));
 					// Asigna el índice de inicio
 					start += length + 1;
 				}
@@ -147,14 +147,14 @@ public class CsvReader : IDataReader
 		if (field.Length > 1)
 		{
 			// Quita las comillas de inicio y fin
-			if (field[0] == '"' && field[field.Length - 1] == '"')
+			if (field[0] == '"' && field[^1] == '"')
 			{
 				if (field.Length == 2)
 					field = string.Empty;
 				else
-					field = field.Slice(1, field.Length - 2);
+					field = field[1..^1];
 			}
-			// Si hay dobles comillas (es decir al menos hay una comilla dentro) se quita una de ellas
+			// Si hay dobles comillas (es decir, al menos hay una comilla dentro) se quita una de ellas
 			if (field.IndexOf('"') >= 0)
 				field = field.ToString().Replace("\"\"", "\"").AsSpan();
 		}
@@ -179,21 +179,17 @@ public class CsvReader : IDataReader
 
 						// Resetea el valor que indica que la siguiente vez se debe leer la siguiente línea
 						mustReadNextLine = false;
-						// Si realmente se ha leido algo
-						if (part.Length > 0)
-						{
-							// Cuenta el número de comillas (los acumula porque puede que haya saltos de línea intermedios que tengan también comillas)
-							quotes += CountQuotes(part);
-							// Se debe leer la siguiente línea si el número de caracteres de comillas no es par, eso quiere decir que ha habido un salto
-							// de línea en un campo
-							if (quotes % 2 != 0)
-								mustReadNextLine = true;
-							// Añade la sección a la línea
-							_actualLine.Append(part);
-							// Si se debe leer una línea más, se añade el salto de línea que se ha quitado en el ReadLine
-							if (mustReadNextLine)
-								_actualLine.Append(Environment.NewLine);
-						}
+						// Cuenta el número de comillas (los acumula porque puede que haya saltos de línea intermedios que tengan también comillas)
+						quotes += CountQuotes(part);
+						// Se debe leer la siguiente línea si el número de caracteres de comillas no es par, eso quiere decir que ha habido un salto
+						// de línea en un campo
+						if (quotes % 2 != 0)
+							mustReadNextLine = true;
+						// Añade la sección a la línea
+						_actualLine.Append(part);
+						// Si se debe leer una línea más, se añade el salto de línea que se ha quitado en el ReadLine
+						if (mustReadNextLine)
+							_actualLine.Append(Environment.NewLine);
 				}
 		}
 	}
@@ -223,14 +219,14 @@ public class CsvReader : IDataReader
 	}
 
 	/// <summary>
-	///		Obtiene los parámetros del isugiente campo
+	///		Obtiene la longitud del siguiente campo
 	/// </summary>
-	private (int start, int length) NextField(ReadOnlySpan<char> line, int start)
+	private int GetLengthField(ReadOnlySpan<char> line, int start)
 	{
 		bool end = false, isInQuotes = false, atScape = false;
 		int index = start, length = 0;
 
-			// Interpreta el siguiente campo
+			// Calcula la longitud del siguiente campo
 			while (index < line.Length && !end)
 			{
 				char actual = line[index];
@@ -263,8 +259,8 @@ public class CsvReader : IDataReader
 					// Pasa al siguiente carácter
 					index++;
 			}
-			// Devuelve los datos
-			return (start, length);
+			// Devuelve la longitud del campo
+			return length;
 	}
 
 	/// <summary>
@@ -276,8 +272,6 @@ public class CsvReader : IDataReader
 		if (field.Length > 0)
 			switch (column.Type)
 			{
-				case ColumnModel.ColumnType.Unknown:
-					return null;
 				case ColumnModel.ColumnType.DateTime:
 					return field.GetDateTime(FileDefinition.DateFormat);
 				case ColumnModel.ColumnType.Boolean:

@@ -1,7 +1,7 @@
 ﻿#if DEBUG
 using FluentAssertions;
 using Bau.Libraries.LibCsvFiles;
-using LibCsvTestsHelper.Tools;
+using LibCsvFilesTest.Tools;
 
 namespace LibCsvFilesTests.Generator;
 
