@@ -461,9 +461,9 @@ public class CsvReader : IDataReader
 	/// <summary>
 	///		Obtiene un campo de un tipo determinado
 	/// </summary>
-	private TypeData GetDataValue<TypeData>(int i)
+	private TypeData? GetDataValue<TypeData>(int column)
 	{
-		object? value = GetValue(i);
+		object? value = GetValue(column);
 
 			if (value is TypeData resultValue)
 				return resultValue;
