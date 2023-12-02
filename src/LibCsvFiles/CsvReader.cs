@@ -16,8 +16,8 @@ public class CsvReader : IDataReader
 	private bool _streamOpenedFromReader;
 	private StreamReader? _fileReader;
 	private object?[] _recordsValues = new object?[1];
-	private long _row;
 	private System.Text.StringBuilder _actualLine = new();
+	private long _row;
 
 	public CsvReader(FileModel? definition, List<ColumnModel>? columns, int notifyAfter = 10_000)
 	{
@@ -93,7 +93,7 @@ public class CsvReader : IDataReader
 	public bool Read()
 	{
 		bool readed = false;
-		
+
 			// Lee la línea
 			ReadLine();
 			// Interpreta los datos
@@ -107,7 +107,7 @@ public class CsvReader : IDataReader
 				// Indica que se han leido datos
 				readed = true;
 			}
-			// Limpia el generador
+			// Limpia la línea leida
 			_actualLine.Clear();
 			// Devuelve el valor que indica si se han leído datos
 			return readed;
