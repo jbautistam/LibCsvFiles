@@ -135,6 +135,8 @@ public class CsvReader : IDataReader
 					// Asigna el índice de inicio
 					start += length + 1;
 				}
+				else// es un campo nulo, pasamos al siguiente
+					start++;
 			}
 	}
 

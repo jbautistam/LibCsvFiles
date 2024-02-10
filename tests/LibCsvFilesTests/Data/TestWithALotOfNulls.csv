@@ -1,0 +1,9 @@
+TypologyId,ChannelId,PointOfSaleCode,ClassificationLevelValue1,ClassificationLevelValue2,ClassificationLevelValue3,ClassificationLevelValue4,ClassificationLevelValue5,ClassificationLevelValue6,ClassificationLevelValue7,ClassificationLevelValue8,ClassificationLevelValue9,ClassificationLevelValue10,YearPeriod,SalesTurnover,SalesQuantity,TotalCost,CompanyId,ChannelName,TypologyName
+4,7,132005,,,,ACESSORIOS,,,,,,,202501,2173.612967,14.542228,742.913076,1075,Class 1,Type
+4,7,132005,,,,ACESSORIOS,,,,,,,202601,2144.033598,14.337335,726.248757,1075,Class 1,Type
+4,7,132005,,,,ACESSORIOS,,,,,,,202401,2114.416704,14.132362,709.585217,1075,Class 1,Type
+4,7,132005,,,,PANTALON,,,,,,,202501,9721.091772,72.708260,2765.032216,1075,Class 1,Type
+4,7,132005,,,,PANTALON,,,,,,,202601,9588.803379,71.683834,2703.009647,1075,Class 1,Type
+4,7,132005,,,,PANTALON,,,,,,,202401,9456.347166,70.659013,2640.989975,1075,Class 1,Type
+4,7,132005,,,,BLUSA,,,,,,,202501,182871.374940,722.078665,47533.275007,1075,Class 1,Type
+4,7,132005,,,,BLUSA,,,,,,,202601,180382.790240,711.904908,46467.053862,1075,Class 1,Type

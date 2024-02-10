@@ -30,7 +30,7 @@ public class CsvReader_should
 	///		Comprueba si se puede cargar un archivo CSV y comprueba los datos (cuando deseamos comprobar un archivo concreto)
 	/// </summary>
 	[Theory]
-	[InlineData("WithQuotes.csv")]
+	[InlineData("TestWithALotOfNulls.csv")]
 	public void parse_csv(string file)
 	{
 		// hay que cambiar el json de este archivo para que no dé errores. Me quedé aquí
