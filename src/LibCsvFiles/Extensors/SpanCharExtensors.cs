@@ -35,7 +35,7 @@ internal static class SpanCharExtensors
 	/// <summary>
 	///		Convierte la fecha y hora de una cadena utilizando un formato estricto
 	/// </summary>
-	public static DateTime? GetDateTime(this ReadOnlySpan<char> value, string format, System.Globalization.DateTimeStyles style = System.Globalization.DateTimeStyles.AssumeUniversal)
+	public static DateTime? GetDateTime(this ReadOnlySpan<char> value, string format, System.Globalization.DateTimeStyles style = System.Globalization.DateTimeStyles.None)
 	{
 		if (DateTime.TryParseExact(value, format, System.Globalization.CultureInfo.InvariantCulture.DateTimeFormat, style, out DateTime result))
 			return result;
@@ -47,7 +47,7 @@ internal static class SpanCharExtensors
 	///		Convierte la fecha y hora de una cadena con un formato estricto
 	/// </summary>
 	public static DateTime GetDateTime(this ReadOnlySpan<char> value, string format, DateTime defaultValue, 
-									   System.Globalization.DateTimeStyles style = System.Globalization.DateTimeStyles.AssumeUniversal)
+									   System.Globalization.DateTimeStyles style = System.Globalization.DateTimeStyles.None)
 	{
 		return GetDateTime(value, format, style) ?? defaultValue;
 	}
