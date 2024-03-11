@@ -59,9 +59,10 @@ public class CsvReader : IDataReader
 		if (_fileReader is not null && !_fileReader.EndOfStream && FileDefinition.WithHeader)
 		{
 			ReadOnlySpan<char> line = _fileReader.ReadLine();
+			List<ColumnModel> readedColumns = new List<ColumnModel>();
 
 				// Interpreta las columnas (si no se han definido)
-				if (Columns.Count == 0 && line.Length > 0)
+				if (line.Length > 0)
 				{
 					int start = 0;
 
@@ -71,20 +72,48 @@ public class CsvReader : IDataReader
 							int length = GetLengthField(line, start);
 
 								// Añade el nombre de la columna
-								Columns.Add(new ColumnModel
+								readedColumns.Add(new ColumnModel
 													{
 														Name = line.Slice(start, length).ToString(),
 														Type = ColumnModel.ColumnType.String
 													}
-											);
+												);
 								// Incrementa la columna de inicio
 								start += length + 1;
 						}
 				}
-				// Genera el array de registros
-				if (Columns.Count > 0)
-					_recordsValues = new object?[Columns.Count];
+				// Normliza el orden de las columnas
+				NormalizeColumns(readedColumns);
 		}
+	}
+
+	/// <summary>
+	///		Normaliza las columnas. Puede que se hayan definido las columnas desordenadas con respecto
+	///	a las leidas en las cabeceras
+	/// </summary>
+	private void NormalizeColumns(List<ColumnModel> readedColumns)
+	{
+		List<ColumnModel> realColumns = new List<ColumnModel>();
+
+			// Guarda las columnas definidas
+			realColumns.AddRange(Columns);
+			// LImpia las columnas definidas
+			Columns.Clear();
+			// Guarda las columnas reales
+			foreach (ColumnModel column in readedColumns)
+			{
+				ColumnModel? realColumn = realColumns.FirstOrDefault(item => item.Name.Equals(column.Name, StringComparison.CurrentCultureIgnoreCase));
+
+					if (realColumn is null)
+						Columns.Add(column);
+					else
+						Columns.Add(new ColumnModel
+											{
+												Name = realColumn.Name,
+												Type = realColumn.Type
+											}
+									);
+			}
 	}
 
 	/// <summary>
