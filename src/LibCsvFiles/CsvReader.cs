@@ -95,7 +95,7 @@ public class CsvReader : IDataReader
 	/// </summary>
 	private void NormalizeColumns(List<ColumnModel> readedColumns)
 	{
-		List<ColumnModel> realColumns = new List<ColumnModel>();
+		List<ColumnModel> realColumns = [];
 
 			// Guarda las columnas definidas
 			realColumns.AddRange(Columns);
@@ -473,7 +473,7 @@ public class CsvReader : IDataReader
 			else if (value is null)
 				return null;
 			else
-				return value.ToString();
+				return value.ToString() ?? string.Empty;
 	}
 
 	/// <summary>
