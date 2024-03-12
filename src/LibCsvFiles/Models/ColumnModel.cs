@@ -45,16 +45,13 @@ public class ColumnModel
 				return ColumnType.Unknown;
 
 		// Comprueba si una cadena contiene un valor
-		bool Contains(string value, string search)
-		{
-			return value.IndexOf(search, StringComparison.CurrentCultureIgnoreCase) >= 0;
-		}
+		bool Contains(string value, string search) => value.IndexOf(search, StringComparison.CurrentCultureIgnoreCase) >= 0;
 	}
 
 	/// <summary>
 	///		Nombre de la columna
 	/// </summary>
-	public string Name { get; set; }
+	public string Name { get; set; } = default!;
 
 	/// <summary>
 	///		Tipo de la columna

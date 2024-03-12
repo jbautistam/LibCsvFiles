@@ -5,6 +5,8 @@
 /// </summary>
 public class FileModel
 {
+	// Constantes privadas
+	private const string DefaultDateFormat = "yyyy-MM-dd";
 	// Variables privadas
 	private string _dateFormat = default!, _thousandsSeparator = default!;
 	private string _trueValue = default!, _falseValue = default!;
@@ -12,7 +14,7 @@ public class FileModel
 
 	public FileModel()
 	{
-		DateFormat = "yyyy-MM-dd";
+		DateFormat = DefaultDateFormat;
 		DecimalSeparator = '.';
 		ThousandsSeparator = "";
 		TrueValue = "1";
@@ -38,7 +40,7 @@ public class FileModel
 	public string DateFormat
 	{
 		get { return _dateFormat; }
-		set { _dateFormat = GetDefault(value, "yyyy-MM-dd"); }
+		set { _dateFormat = GetDefault(value, DefaultDateFormat); }
 	}
 
 	/// <summary>
@@ -56,7 +58,7 @@ public class FileModel
 	public string ThousandsSeparator
 	{
 		get { return _thousandsSeparator; }
-		set { _thousandsSeparator = GetDefault(value, ","); }
+		set { _thousandsSeparator = GetDefault(value, ""); }
 	}
 
 	/// <summary>
@@ -90,9 +92,4 @@ public class FileModel
 	///		Indica si la primera línea es la cabecera
 	/// </summary>
 	public bool WithHeader { get; set; }
-
-	/// <summary>
-	///		Indica si se debe leer o escribir una cabecera tipada
-	/// </summary>
-	public bool TypedHeader { get; set; }
 }

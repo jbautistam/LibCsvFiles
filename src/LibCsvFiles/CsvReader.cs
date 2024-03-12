@@ -59,7 +59,7 @@ public class CsvReader : IDataReader
 		if (_fileReader is not null && !_fileReader.EndOfStream && FileDefinition.WithHeader)
 		{
 			ReadOnlySpan<char> line = _fileReader.ReadLine();
-			List<ColumnModel> readedColumns = new List<ColumnModel>();
+			List<ColumnModel> readedColumns = [];
 
 				// Interpreta las columnas (si no se han definido)
 				if (line.Length > 0)
@@ -84,6 +84,8 @@ public class CsvReader : IDataReader
 				}
 				// Normliza el orden de las columnas
 				NormalizeColumns(readedColumns);
+				// Inicializa el buffer de campos
+				_recordsValues = new object[Columns.Count];
 		}
 	}
 

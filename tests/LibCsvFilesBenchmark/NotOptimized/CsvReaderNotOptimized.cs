@@ -65,27 +65,12 @@ namespace Bau.Libraries.LibCsvFiles
 					// Interpreta las columnas (si no se han definido)
 					if (Columns.Count == 0 && !string.IsNullOrEmpty(line))
 						foreach (string field in ParseLine(line.Trim()))
-							if (FileDefinition.TypedHeader)
-							{
-								string[] parts = field.Split('|');
-
-									if (parts.Length == 2)
-										Columns.Add(new ColumnModel
-															{
-																Name = parts[0],
-																Type = parts[1].GetEnum(ColumnModel.ColumnType.String)
-															}
-													);
-									else
-										throw new NotImplementedException($"Can't extract the column type from header ({field})");
-							}
-							else
-								Columns.Add(new ColumnModel
-													{
-														Name = field,
-														Type = ColumnModel.ColumnType.String
-													}
-											);
+							Columns.Add(new ColumnModel
+												{
+													Name = field,
+													Type = ColumnModel.ColumnType.String
+												}
+										);
 			}
 		}
 
