@@ -13,7 +13,7 @@ public class CsvReader_should
 	/// <summary>
 	///		Comprueba si se puede cargar un directorio con archivos CSV y comprueba los datos
 	/// </summary>
-	[Theory]
+	[Theory(Skip = "Sólo en local")]
 	[InlineData("")]
 	public void parse_path_csv(string path)
 	{
@@ -29,7 +29,7 @@ public class CsvReader_should
 	/// <summary>
 	///		Comprueba si se puede cargar un archivo CSV y comprueba los datos (cuando deseamos comprobar un archivo concreto)
 	/// </summary>
-	[Theory]
+	[Theory(Skip = "Sólo en local")]
 	[InlineData("Test.csv")]
 	public void parse_csv(string file)
 	{
