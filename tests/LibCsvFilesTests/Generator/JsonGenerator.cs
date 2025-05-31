@@ -13,7 +13,7 @@ public class JsonGenerator
 	/// <summary>
 	///		Genera los archivos de respuesta de todos los archivos de solicitud
 	/// </summary>
-	[Fact] // (Skip = "Sólo cuando sea necesario regenerar los archivos JSON")]
+	[Fact(Skip = "Sólo cuando sea necesario regenerar los archivos JSON")]
 	public void generate_all_response_files()
 	{
 		List<string> files = FileHelper.GetFiles(string.Empty, ".csv");
