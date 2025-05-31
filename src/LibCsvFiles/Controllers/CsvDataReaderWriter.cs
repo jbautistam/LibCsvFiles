@@ -9,9 +9,9 @@ namespace Bau.Libraries.LibCsvFiles.Controllers;
 public class CsvDataReaderWriter
 {
 	// Eventos públicos
-	public event EventHandler<EventArguments.AffectedEvntArgs> Progress;
+	public event EventHandler<EventArguments.AffectedEvntArgs>? Progress;
 
-	public CsvDataReaderWriter(Models.FileModel fileParameters = null, int notifyAfter = 200_000)
+	public CsvDataReaderWriter(Models.FileModel? fileParameters = null, int notifyAfter = 200_000)
 	{
 		FileParameters = fileParameters ?? new Models.FileModel();
 		NotifyAfter = notifyAfter;
