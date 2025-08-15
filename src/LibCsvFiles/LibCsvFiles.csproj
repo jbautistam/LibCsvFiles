@@ -2,7 +2,7 @@
 
 	<PropertyGroup>
     <RootNamespace>Bau.Libraries.$(MSBuildProjectName)</RootNamespace>
-		<TargetFramework>net8.0</TargetFramework>
+		<TargetFramework>net9.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<PackageProjectUrl>https://github.com/jbautistam/LibCsvFiles</PackageProjectUrl>
@@ -22,6 +22,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.IO.Pipelines" Version="9.0.7" />
+    <PackageReference Include="System.IO.Pipelines" Version="9.0.8" />
   </ItemGroup>
 </Project>
